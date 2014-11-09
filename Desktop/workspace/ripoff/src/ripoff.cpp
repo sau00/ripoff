@@ -3,7 +3,7 @@
 // Author      : Sau00
 // Version     :
 // Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
+// Description : My first C++ application
 //============================================================================
 
 #include <iostream>
@@ -27,7 +27,9 @@ vector <string> readFile() {
 	/* Filling the Vector with file strings */
 	while(!fileStream.eof()) {
 		getline(fileStream, currentLine);
-		stringVector.push_back(currentLine);
+		if(!currentLine.empty()) {
+			stringVector.push_back(currentLine);
+		}
 	}
 
 	fileStream.close();
@@ -85,14 +87,37 @@ vector <string> normalizeString(vector <string> Input) {
 	return Input;
 }
 
+/* Parsing words from strings */
+vector <string> parseWords(vector <string> Input) {
+	vector <string> words;
+	string currentWord;
+	int start;
+
+	for(int i = 0; i < Input.size(); i++) {
+		while((start = Input[i].find(" ")) != string::npos) {
+			currentWord = Input[i].substr(0, start);
+			if(!currentWord.empty()) {
+				words.push_back(currentWord);
+			}
+			Input[i].replace(0, start + 1, "");
+		}
+		if(!currentWord.empty()) {
+			words.push_back(currentWord);
+		}
+	}
+
+	return words;
+}
+
 int main() {
 	setlocale(LC_ALL, "");
 	vector <string> stringVectorInput;
 	vector <string> stringVectorOutput;
+	vector <string> words;
 
 	stringVectorInput = normalizeString(readFile()); // Reading and normalizing file
-
-	printStringVector(stringVectorInput);
+	words = parseWords(stringVectorInput); // Spliting all string to words
+	printStringVector(words); // Printing results
 
 	return 0;
 }
