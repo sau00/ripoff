@@ -16,13 +16,16 @@
 using namespace std;
 
 /* Reading input file */
-vector <string> readFile() {
+vector <string> readFile(string inputFilename) {
+
+	// @TODO Add file exist checking
+
 	ifstream fileStream;
 	string currentLine;
 	vector <string> stringVector;
 
 	/* Opening file stream */
-	fileStream.open("input.txt");
+	fileStream.open(inputFilename.c_str());
 
 	/* Filling the Vector with file strings */
 	while(!fileStream.eof()) {
@@ -109,13 +112,30 @@ vector <string> parseWords(vector <string> Input) {
 	return words;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+
+	string inputFilename;
+	string outputFilename;
+
+	for (int i = 0; i < argc; i++) {
+		string arg = argv[i];
+		if((arg == "-h") || (arg == "--help")) {
+			std::cout << arg << endl;
+		} else if((arg == "-i") && ((i + 1) < argc)) {
+			inputFilename = argv[i + 1];
+		} else if((arg == "-o") && ((i + 1) < argc)) {
+			outputFilename = argv[i + 1];
+		}
+	}
+
 	setlocale(LC_ALL, "");
 	vector <string> stringVectorInput;
 	vector <string> stringVectorOutput;
 	vector <string> words;
 
-	stringVectorInput = normalizeString(readFile()); // Reading and normalizing file
+
+	stringVectorInput = normalizeString(readFile(inputFilename)); // Reading and normalizing file
+
 	words = parseWords(stringVectorInput); // Spliting all string to words
 	printStringVector(words); // Printing results
 
