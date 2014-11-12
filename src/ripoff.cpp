@@ -40,6 +40,10 @@ vector <string> readFile(string inputFilename) {
 	return stringVector;
 }
 
+void saveFile(string outputFilename) {
+	// some saving operation
+}
+
 /* Printing Vector contents */
 void printStringVector(vector <string> stringVector) {
 	for(int i = 0; i < stringVector.size(); i++) {
@@ -138,6 +142,8 @@ int main(int argc, char* argv[]) {
 
 	words = parseWords(stringVectorInput); // Spliting all string to words
 	printStringVector(words); // Printing results
+
+//	saveFile("output.txt"); // saving file
 
 	return 0;
 }
