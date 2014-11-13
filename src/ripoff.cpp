@@ -51,6 +51,10 @@ void printStringVector(vector <string> stringVector) {
 	}
 }
 
+vector <string> makeShingles() {
+
+}
+
 /* Getting stop-words array */
 vector <string> getStopwords() {
 	string stopWordsArray[] = {
@@ -106,10 +110,13 @@ vector <string> parseWords(vector <string> Input) {
 			if(!currentWord.empty()) {
 				words.push_back(currentWord);
 			}
+
 			Input[i].replace(0, start + 1, "");
-		}
-		if(!currentWord.empty()) {
-			words.push_back(currentWord);
+
+			// Adding last word in the string
+			if((start = Input[i].find(" ")) == string::npos) {
+				words.push_back(Input[i]);
+			}
 		}
 	}
 
