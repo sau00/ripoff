@@ -12,6 +12,7 @@
 #include <string>
 #include <utility>
 #include <algorithm>
+#include <string.h>
 
 using namespace std;
 
@@ -51,8 +52,21 @@ void printStringVector(vector <string> stringVector) {
 	}
 }
 
-vector <string> makeShingles() {
+vector <string> makeShingles(vector <string> words, int shinglesSize) {
+	vector <string> shingles;
+	string currentShingle;
+	for (int i = 0; i < words.size() - shinglesSize + 1; i++) {
+		for (int k = i; k < shinglesSize + i; k++) {
+			currentShingle += words[k];
+			if(shinglesSize + i - k != 1) {
+				currentShingle += " ";
+			}
+		}
+		shingles.push_back(currentShingle);
+		currentShingle = "";
+	}
 
+	return shingles;
 }
 
 /* Getting stop-words array */
@@ -143,12 +157,18 @@ int main(int argc, char* argv[]) {
 	vector <string> stringVectorInput;
 	vector <string> stringVectorOutput;
 	vector <string> words;
+	vector <string> shingles;
 
 
 	stringVectorInput = normalizeString(readFile(inputFilename)); // Reading and normalizing file
 
 	words = parseWords(stringVectorInput); // Spliting all string to words
-	printStringVector(words); // Printing results
+
+	shingles = makeShingles(words, 10); // Making shingles
+
+//	printStringVector(words); // Printing results
+
+	printStringVector(shingles); //Printing shingles
 
 //	saveFile("output.txt"); // saving file
 
